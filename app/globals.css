@@ -1,27 +1,126 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+ 
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+ 
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+ 
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+ 
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+ 
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+ 
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+ 
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+ 
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+ 
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+ 
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+ 
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+ 
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+ 
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+/* Custom styles for our components */
+.auth-card {
+  @apply w-full max-w-md bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.auth-input {
+  @apply bg-gray-50 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white;
 }
+
+.auth-button {
+  @apply w-full bg-purple-600 hover:bg-purple-700 dark:bg-purple-500 dark:hover:bg-purple-600 text-white font-bold py-2 px-4 rounded;
+}
+
+.sidebar {
+  @apply h-screen bg-gray-900 text-white p-4 flex flex-col;
+}
+
+.sidebar-link {
+  @apply flex items-center p-2 rounded-lg transition-colors text-gray-300 hover:bg-gray-800;
+}
+
+.sidebar-link-active {
+  @apply bg-purple-700 text-white;
+}
+
+.dashboard-content {
+  @apply flex-1 p-8 overflow-auto bg-gray-100 dark:bg-gray-900;
+}
+
+.project-form-dialog {
+  @apply bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6;
+}
+
+.project-table {
+  @apply w-full bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden;
+}
+
+.project-table th {
+  @apply px-6 py-3 bg-gray-50 dark:bg-gray-700 text-left text-xs leading-4 font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider;
+}
+
+.project-table td {
+  @apply px-6 py-4 whitespace-nowrap text-sm leading-5 text-gray-900 dark:text-gray-100;
+}
+
+.project-table tr:nth-child(even) {
+  @apply bg-gray-50 dark:bg-gray-700;
+}
+
