@@ -1,8 +1,20 @@
+'use client'
 import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle, Zap, Users, BarChart } from 'lucide-react'
 import Link from "next/link"
+import { useEffect } from "react";
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store/store'
 
 export default function Home() {
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      window.location.href = '/dashboard';
+    }
+  } , [isLoggedIn])
+
   return (
     <div className="flex flex-col min-h-screen">
       <header className="px-4 lg:px-6 h-16 flex items-center">
@@ -25,7 +37,7 @@ export default function Home() {
           </Link>
         </nav>
       </header>
-      <main className="flex-1">
+      <main className="flex-1 bg-white">
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-b from-purple-50 to-white">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
@@ -38,10 +50,12 @@ export default function Home() {
                 </p>
               </div>
               <div className="space-x-4">
+              <Link href={'/auth/login'}>
                 <Button className="bg-purple-600 text-xl p-6 hover:bg-purple-700">
-                  Get Started
+                Get Started
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
+                </Link> 
                 <Button variant="outline" className="text-xl p-6">Learn More</Button>
               </div>
             </div>

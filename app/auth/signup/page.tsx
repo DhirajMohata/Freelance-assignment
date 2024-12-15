@@ -12,7 +12,6 @@ import { ThemeToggle } from '@/components/auth/theme-toggle'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '@/store/slices/authSlice'
 import { RootState } from '@/store/store'
-import { use } from 'framer-motion/dist/client'
 
 export default function SignUpPage() {
   const [fullName, setFullName] = useState("")
