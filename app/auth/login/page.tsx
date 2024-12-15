@@ -10,12 +10,22 @@ import { Input } from "@/components/ui/input"
 import { AuthCard } from '@/components/auth/auth-card'
 import { ThemeToggle } from '@/components/auth/theme-toggle'
 import { validateUser } from '@/data/userData'
+import { useDispatch, useSelector } from 'react-redux'
+import { login } from '@/store/slices/authSlice'
+import { RootState } from '@/store/store'
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const router = useRouter()
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+
+  
+  if (isLoggedIn) {
+    router.push("/dashboard")
+  }
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
@@ -38,10 +48,11 @@ export default function LoginPage() {
     }
 
     // Login Success
+    dispatch(login({ email, token: 'dummy-token' }));
     toast.success("Login successful!")
     setTimeout(() => {
       router.push("/dashboard")
-    }, 1000)
+    }, 500)
   }
 
   return (
@@ -78,7 +89,7 @@ export default function LoginPage() {
                 type="button"
                 variant="ghost"
                 size="icon"
-                className="absolute right-2 top-1/2 -translate-y-1/2"
+                className="absolute right-2 top-1/4 -translate-y-1/2 "
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (

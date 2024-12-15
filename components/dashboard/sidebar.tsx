@@ -4,21 +4,32 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { ChevronLeft, ChevronRight, Home, Briefcase, Users, Settings } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Home, Briefcase, Users, Settings, LogOut } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/navigation';
+import { logout } from '@/store/slices/authSlice';
 
 const menuItems = [
   { icon: Home, label: 'Dashboard', href: '/dashboard' },
   { icon: Briefcase, label: 'Projects', href: '/auth/login' },
   { icon: Users, label: 'Team', href: '/auth/signup' },
-  { icon: Settings, label: 'Settings', href: '/dashboard/settings' },
 ]
 
 export function Sidebar() {
   const [expanded, setExpanded] = useState(false)
   const pathname = usePathname()
   const [showLabel, setShowLabel] = useState(false);
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    
+    dispatch(logout()); 
+    localStorage.removeItem('token');
+    location.href = '/auth/login';
+  };
   
   useEffect(() => {
     let timer: string | number | NodeJS.Timeout | undefined;
@@ -73,6 +84,23 @@ export function Sidebar() {
               </Link>
             </li>
           ))}
+          <li >
+              <Button
+                onClick={() => handleLogout()}
+                className={cn(
+                  "flex items-center p-2 rounded-lg transition-colors",
+                  "hover:bg-white dark:hover:bg-gray-700",
+                   "bg-purple-5 0 dark:bg-purple-600"
+                )}
+              >
+                <LogOut className="w-6 h-6 text-gray-600  dark:text-white" />
+                {expanded && showLabel && (
+                    <span className="ml-3 text-gray-700 dark:text-gray-200">
+                      LogOut
+                    </span>
+                )}
+              </Button>
+            </li>
         </ul>
       </nav>
     </motion.div>

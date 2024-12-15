@@ -9,6 +9,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { AuthCard } from '@/components/auth/auth-card'
 import { ThemeToggle } from '@/components/auth/theme-toggle'
+import { useDispatch, useSelector } from 'react-redux'
+import { login } from '@/store/slices/authSlice'
+import { RootState } from '@/store/store'
 
 export default function SignUpPage() {
   const [fullName, setFullName] = useState("")
@@ -16,6 +19,12 @@ export default function SignUpPage() {
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const router = useRouter()
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+
+  if (isLoggedIn) {
+    router.push("/dashboard")
+  }
 
   const handleSignUp = (e: React.FormEvent) => {
     e.preventDefault()
@@ -47,6 +56,7 @@ export default function SignUpPage() {
     
 
     const newUser = { fullName, email, password }
+    dispatch(login({ email, token: 'dummy-token' }));
     toast.success("Registration successful!");
     localStorage.setItem("isFirstTime", "true"); 
     setTimeout(() => {
@@ -98,7 +108,7 @@ export default function SignUpPage() {
                 type="button"
                 variant="ghost"
                 size="icon"
-                className="absolute right-2 top-1/2 -translate-y-1/2"
+                className="absolute right-2 top-1/4 -translate-y-1/2"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (

@@ -10,17 +10,24 @@ import { AddProjectDialog } from '@/components/dashboard/add-project-dialog'
 import { Sidebar } from '@/components/dashboard/sidebar'
 import { initialProjects, addProject as addProjectUtil, Project } from '@/data/projectData'
 import { ThemeToggle } from '@/components/auth/theme-toggle'
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
 
 export default function DashboardPage() {
   const [isAddProjectOpen, setIsAddProjectOpen] = useState(false)
   const [projects, setProjects] = useState<Project[]>(initialProjects)
   const [isFirstTime, setIsFirstTime] = useState(false)
 
+
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+  const userDetails = useSelector((state: RootState) => state.auth.userDetails);
+
+
   useEffect(() => {
     // Check if the user is visiting for the first time
     if (localStorage.getItem('isFirstTime') === 'true') {
       setIsFirstTime(true)
-      localStorage.removeItem('isFirstTime') // Reset the flag
+      localStorage.removeItem('isFirstTime')
     }
   }, [])
 
@@ -31,6 +38,9 @@ export default function DashboardPage() {
       return updatedProjects
     })
   }
+    if (!isLoggedIn) {
+      window.location.href = '/auth/login';
+    }
 
   return (
     <div className="flex h-screen">

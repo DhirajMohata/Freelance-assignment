@@ -1,13 +1,18 @@
+'use client'
+
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { Providers } from "./providers"
 
+import { store } from "@/store/store"
+import { Provider } from 'react-redux'
+
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata = {
-  title: 'Workflo',
-  description: 'Project management made easy',
-}
+// export const metadata = {
+//   title: 'Workflo',
+//   description: 'Project management made easy',
+// }
 
 export default function RootLayout({
   children,
@@ -17,7 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <Providers>{children}</Providers>
+        <Provider store={store}>
+          <Providers>{children}</Providers>
+        </Provider>
       </body>
     </html>
   )
