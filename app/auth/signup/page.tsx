@@ -22,16 +22,12 @@ export default function SignUpPage() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      router.push("/dashboard")
-    }
-  } , [isLoggedIn])
+    
 
   const handleSignUp = (e: React.FormEvent) => {
     e.preventDefault()
 
-    // Validations
+    
     if (!fullName.trim()) {
       toast.error("Full Name is required")
       return
@@ -47,7 +43,6 @@ export default function SignUpPage() {
       return
     }
 
-    // Simulate storing user in a local "database"
     const users = JSON.parse(localStorage.getItem("users") || "[]")
     const isEmailTaken = users.some((user: any) => user.email === email)
 
@@ -66,6 +61,9 @@ export default function SignUpPage() {
     }, 1000);
   }
 
+  if (isLoggedIn) {
+    router.push("/dashboard")
+  }
   return (
     <div className=''>
       <ThemeToggle />

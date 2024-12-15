@@ -1,6 +1,6 @@
 'use client'
 
-import { use, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Confetti from 'react-confetti'
 import { Plus } from 'lucide-react'
 import { toast, Toaster } from 'react-hot-toast'
@@ -13,10 +13,13 @@ import { ThemeToggle } from '@/components/auth/theme-toggle'
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
 
+import { useRouter } from 'next/navigation'
+
 export default function DashboardPage() {
   const [isAddProjectOpen, setIsAddProjectOpen] = useState(false)
   const [projects, setProjects] = useState<Project[]>(initialProjects)
   const [isFirstTime, setIsFirstTime] = useState(false)
+  const router = useRouter()
 
 
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
@@ -24,7 +27,6 @@ export default function DashboardPage() {
 
 
   useEffect(() => {
-    // Check if the user is visiting for the first time
     if (localStorage.getItem('isFirstTime') === 'true') {
       setIsFirstTime(true)
       localStorage.removeItem('isFirstTime')
@@ -38,11 +40,10 @@ export default function DashboardPage() {
       return updatedProjects
     })
   }
-  useEffect(() => {
+  
     if (!isLoggedIn) {
-      window.location.href = '/auth/login';
+      router.push("/auth/login")
     }
-  } , [isLoggedIn])
 
   return (
     <div className="flex h-screen">

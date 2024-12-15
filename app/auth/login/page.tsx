@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { toast, Toaster } from 'react-hot-toast'
@@ -23,14 +23,13 @@ export default function LoginPage() {
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
   
-  if (isLoggedIn) {
-    router.push("/dashboard")
-  }
-
+      if (isLoggedIn) {
+        router.push("/dashboard")
+      }
+    
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
 
-    // Input Validation
     if (!email || !/\S+@\S+\.\S+/.test(email)) {
       toast.error("Please enter a valid email address")
       return
@@ -41,13 +40,11 @@ export default function LoginPage() {
       return
     }
 
-    // Validate User
     if (!validateUser(email, password)) {
       toast.error("Invalid email or password")
       return
     }
 
-    // Login Success
     dispatch(login({ email, token: 'dummy-token' }));
     toast.success("Login successful!")
     setTimeout(() => {
