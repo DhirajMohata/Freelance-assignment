@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import Confetti from 'react-confetti'
 import { Plus } from 'lucide-react'
 import { toast, Toaster } from 'react-hot-toast'
@@ -38,9 +38,11 @@ export default function DashboardPage() {
       return updatedProjects
     })
   }
+  useEffect(() => {
     if (!isLoggedIn) {
       window.location.href = '/auth/login';
     }
+  } , [isLoggedIn])
 
   return (
     <div className="flex h-screen">

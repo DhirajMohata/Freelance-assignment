@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { toast, Toaster } from 'react-hot-toast'
@@ -12,6 +12,7 @@ import { ThemeToggle } from '@/components/auth/theme-toggle'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '@/store/slices/authSlice'
 import { RootState } from '@/store/store'
+import { use } from 'framer-motion/dist/client'
 
 export default function SignUpPage() {
   const [fullName, setFullName] = useState("")
@@ -22,9 +23,11 @@ export default function SignUpPage() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
-  if (isLoggedIn) {
-    router.push("/dashboard")
-  }
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push("/dashboard")
+    }
+  } , [isLoggedIn])
 
   const handleSignUp = (e: React.FormEvent) => {
     e.preventDefault()
